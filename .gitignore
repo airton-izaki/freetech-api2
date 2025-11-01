@@ -1,0 +1,16 @@
+# Arquivos gerados por Node.js/NPM/Yarn
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Variáveis de ambiente secretas
+.env
+.env.local
+.env.*.local
+
+# Arquivos de IDE (VS Code, etc.)
+.vscode/
+
+# Arquivos de build/distribuição (se você tiver)
+dist/
+build/
