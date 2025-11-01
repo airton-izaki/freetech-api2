@@ -1,20 +1,34 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require("dotenv").config();
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const routes = require('./src/routes/index');
 
-var app = express();
+// Variável de ambiente para URL do banco (defina no .env)
+const url = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_HOST}/${process.env.MONGODB_DBNAME}`;
+
+mongoose
+  .connect(url)
+  .then(() => console.log("Conectado ao MongoDB"))
+  .catch((err) => console.log("Erro ao conectar ao MongoDB", err.message));
+
+//const indexRouter = require('./routes/index');
+//const usersRouter = require('./routes/users');
+
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api', routes);
+
+//app.use('/', indexRouter);
+//app.use('/users', usersRouter);
 
 module.exports = app;
